@@ -37,7 +37,7 @@ class OAuth2ClientTest extends TestCase
     const TESTING_GRAPH_VERSION = 'v1337';
 
     /**
-     * @var FooFacebookClientForOAuth2Test
+     * @var FooFacebookClientForOAuth2TestClass
      */
     protected $client;
 
@@ -50,7 +50,7 @@ class OAuth2ClientTest extends TestCase
 	{
 		parent::setUp();
         $app = new FacebookApp('123', 'foo_secret');
-        $this->client = new FooFacebookClientForOAuth2Test();
+        $this->client = new FooFacebookClientForOAuth2TestClass();
         $this->oauth = new OAuth2Client($app, $this->client, static::TESTING_GRAPH_VERSION);
     }
 
