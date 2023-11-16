@@ -23,6 +23,7 @@
  */
 namespace Facebook\Tests\HttpClients;
 
+use Facebook\Exceptions\FacebookSDKException;
 use Mockery as m;
 use Facebook\HttpClients\FacebookGuzzleHttpClient;
 use GuzzleHttp\Message\Request;
@@ -42,7 +43,7 @@ class FacebookGuzzleHttpClientTest extends AbstractTestHttpClient
      */
     protected $guzzleClient;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->guzzleMock = m::mock('GuzzleHttp\Client');
         $this->guzzleClient = new FacebookGuzzleHttpClient($this->guzzleMock);
@@ -97,12 +98,10 @@ class FacebookGuzzleHttpClientTest extends AbstractTestHttpClient
         $this->assertEquals(200, $response->getHttpResponseCode());
     }
 
-    /**
-     * @expectedException \Facebook\Exceptions\FacebookSDKException
-     */
-    public function testThrowsExceptionOnClientError()
+	public function testThrowsExceptionOnClientError()
     {
-        $request = new Request('GET', 'http://foo.com');
+		$this->expectException(FacebookSDKException::class);
+		$request = new Request('GET', 'http://foo.com');
 
         $this->guzzleMock
             ->shouldReceive('createRequest')

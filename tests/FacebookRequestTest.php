@@ -23,13 +23,15 @@
  */
 namespace Facebook\Tests;
 
+use Facebook\Exceptions\FacebookSDKException;
 use Facebook\Facebook;
 use Facebook\FacebookApp;
 use Facebook\FacebookRequest;
 use Facebook\FileUpload\FacebookFile;
 use Facebook\FileUpload\FacebookVideo;
+use PHPUnit\Framework\TestCase;
 
-class FacebookRequestTest extends \PHPUnit_Framework_TestCase
+class FacebookRequestTest extends TestCase
 {
     public function testAnEmptyRequestEntityCanInstantiate()
     {
@@ -39,34 +41,28 @@ class FacebookRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Facebook\FacebookRequest', $request);
     }
 
-    /**
-     * @expectedException \Facebook\Exceptions\FacebookSDKException
-     */
-    public function testAMissingAccessTokenWillThrow()
+	public function testAMissingAccessTokenWillThrow()
     {
-        $app = new FacebookApp('123', 'foo_secret');
+		$this->expectException(FacebookSDKException::class);
+		$app = new FacebookApp('123', 'foo_secret');
         $request = new FacebookRequest($app);
 
         $request->validateAccessToken();
     }
 
-    /**
-     * @expectedException \Facebook\Exceptions\FacebookSDKException
-     */
-    public function testAMissingMethodWillThrow()
+	public function testAMissingMethodWillThrow()
     {
-        $app = new FacebookApp('123', 'foo_secret');
+		$this->expectException(FacebookSDKException::class);
+		$app = new FacebookApp('123', 'foo_secret');
         $request = new FacebookRequest($app);
 
         $request->validateMethod();
     }
 
-    /**
-     * @expectedException \Facebook\Exceptions\FacebookSDKException
-     */
-    public function testAnInvalidMethodWillThrow()
+	public function testAnInvalidMethodWillThrow()
     {
-        $app = new FacebookApp('123', 'foo_secret');
+		$this->expectException(FacebookSDKException::class);
+		$app = new FacebookApp('123', 'foo_secret');
         $request = new FacebookRequest($app, 'foo_token', 'FOO');
 
         $request->validateMethod();
@@ -109,12 +105,10 @@ class FacebookRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('bar_token', $accessToken);
     }
 
-    /**
-     * @expectedException \Facebook\Exceptions\FacebookSDKException
-     */
-    public function testAccessTokenConflictsWillThrow()
+	public function testAccessTokenConflictsWillThrow()
     {
-        $app = new FacebookApp('123', 'foo_secret');
+		$this->expectException(FacebookSDKException::class);
+		$app = new FacebookApp('123', 'foo_secret');
         new FacebookRequest($app, 'foo_token', 'POST', '/me', ['access_token' => 'bar_token']);
     }
 

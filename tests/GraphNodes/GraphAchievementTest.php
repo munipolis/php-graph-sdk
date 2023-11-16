@@ -25,7 +25,6 @@ namespace Facebook\Tests\GraphNodes;
 
 class GraphAchievementTest extends AbstractGraphNode
 {
-
     public function testIdIsString()
     {
         $dataFromGraph = [
