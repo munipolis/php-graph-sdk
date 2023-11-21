@@ -26,9 +26,10 @@ namespace Facebook\Tests\PersistentData;
 use Facebook\PersistentData\FacebookMemoryPersistentDataHandler;
 use Facebook\PersistentData\FacebookSessionPersistentDataHandler;
 use Facebook\PersistentData\PersistentDataFactory;
+use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_TestCase;
 
-class PersistentDataFactoryTest extends PHPUnit_Framework_TestCase
+class PersistentDataFactoryTest extends TestCase
 {
     const COMMON_NAMESPACE = 'Facebook\PersistentData\\';
     const COMMON_INTERFACE = 'Facebook\PersistentData\PersistentDataInterface';
@@ -50,7 +51,7 @@ class PersistentDataFactoryTest extends PHPUnit_Framework_TestCase
     /**
      * @return array
      */
-    public function persistentDataHandlerProviders()
+    public static function persistentDataHandlerProviders()
     {
         $handlers = [
             ['memory', self::COMMON_NAMESPACE . 'FacebookMemoryPersistentDataHandler'],

@@ -23,16 +23,18 @@
  */
 namespace Facebook\Tests;
 
+use Facebook\Exceptions\FacebookSDKException;
 use Facebook\FacebookApp;
+use PHPUnit\Framework\TestCase;
 
-class FacebookAppTest extends \PHPUnit_Framework_TestCase
+class FacebookAppTest extends TestCase
 {
     /**
      * @var FacebookApp
      */
     private $app;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->app = new FacebookApp('id', 'secret');
     }
@@ -64,12 +66,10 @@ class FacebookAppTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('secret', $newApp->getSecret());
     }
 
-    /**
-     * @expectedException \Facebook\Exceptions\FacebookSDKException
-     */
-    public function testOverflowIntegersWillThrow()
+	public function testOverflowIntegersWillThrow()
     {
-        new FacebookApp(PHP_INT_MAX + 1, "foo");
+		$this->expectException(FacebookSDKException::class);
+		new FacebookApp(PHP_INT_MAX + 1, "foo");
     }
 
     public function testUnserializedIdsWillBeString()

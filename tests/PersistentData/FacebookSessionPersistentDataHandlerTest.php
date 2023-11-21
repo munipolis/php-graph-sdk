@@ -23,21 +23,21 @@
  */
 namespace Facebook\Tests\PersistentData;
 
+use Facebook\Exceptions\FacebookSDKException;
 use Facebook\PersistentData\FacebookSessionPersistentDataHandler;
+use PHPUnit\Framework\TestCase;
 
-class FacebookSessionPersistentDataHandlerTest extends \PHPUnit_Framework_TestCase
+class FacebookSessionPersistentDataHandlerTest extends TestCase
 {
-    /**
-     * @expectedException \Facebook\Exceptions\FacebookSDKException
-     */
-    public function testInactiveSessionsWillThrow()
+	public function testInactiveSessionsWillThrow()
     {
-        new FacebookSessionPersistentDataHandler();
+		$this->expectException(FacebookSDKException::class);
+		new FacebookSessionPersistentDataHandler();
     }
 
     public function testCanSetAValue()
     {
-        $handler = new FacebookSessionPersistentDataHandler($enableSessionCheck = false);
+        $handler = new FacebookSessionPersistentDataHandler(enableSessionCheck: false);
         $handler->set('foo', 'bar');
 
         $this->assertEquals('bar', $_SESSION['FBRLH_foo']);
@@ -46,7 +46,7 @@ class FacebookSessionPersistentDataHandlerTest extends \PHPUnit_Framework_TestCa
     public function testCanGetAValue()
     {
         $_SESSION['FBRLH_faz'] = 'baz';
-        $handler = new FacebookSessionPersistentDataHandler($enableSessionCheck = false);
+        $handler = new FacebookSessionPersistentDataHandler(enableSessionCheck: false);
         $value = $handler->get('faz');
 
         $this->assertEquals('baz', $value);
@@ -54,7 +54,7 @@ class FacebookSessionPersistentDataHandlerTest extends \PHPUnit_Framework_TestCa
 
     public function testGettingAValueThatDoesntExistWillReturnNull()
     {
-        $handler = new FacebookSessionPersistentDataHandler($enableSessionCheck = false);
+        $handler = new FacebookSessionPersistentDataHandler(enableSessionCheck: false);
         $value = $handler->get('does_not_exist');
 
         $this->assertNull($value);

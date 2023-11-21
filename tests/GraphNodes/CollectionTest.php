@@ -24,10 +24,10 @@
 namespace Facebook\Tests\GraphNodes;
 
 use Facebook\GraphNodes\Collection;
+use PHPUnit\Framework\TestCase;
 
-class CollectionTest extends \PHPUnit_Framework_TestCase
+class CollectionTest extends TestCase
 {
-
     public function testAnExistingPropertyCanBeAccessed()
     {
         $graphNode = new Collection(['foo' => 'bar']);

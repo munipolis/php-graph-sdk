@@ -212,12 +212,10 @@ class FacebookRequest
 
     /**
      * Set the HTTP method for this request.
-     *
-     * @param string
      */
-    public function setMethod($method)
+    public function setMethod(?string $method)
     {
-        $this->method = strtoupper($method);
+        $this->method = $method ? strtoupper($method) : '';
     }
 
     /**
@@ -227,7 +225,7 @@ class FacebookRequest
      */
     public function getMethod()
     {
-        return $this->method;
+        return $this->method ?: '';
     }
 
     /**

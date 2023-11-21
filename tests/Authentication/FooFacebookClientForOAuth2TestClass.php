@@ -27,7 +27,7 @@ use Facebook\FacebookClient;
 use Facebook\FacebookRequest;
 use Facebook\FacebookResponse;
 
-class FooFacebookClientForOAuth2Test extends FacebookClient
+class FooFacebookClientForOAuth2TestClass extends FacebookClient
 {
     protected $response = '';
 
