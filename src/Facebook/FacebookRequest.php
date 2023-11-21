@@ -215,7 +215,7 @@ class FacebookRequest
      */
     public function setMethod(?string $method)
     {
-        $this->method = $method ? strtoupper($method) : $method;
+        $this->method = $method ? strtoupper($method) : '';
     }
 
     /**
