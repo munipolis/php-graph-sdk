@@ -98,7 +98,7 @@ class FacebookRequest
     {
         $this->setApp($app);
         $this->setAccessToken($accessToken);
-        $this->setMethod($method ?? '');
+        $this->setMethod($method);
         $this->setEndpoint($endpoint);
         $this->setParams($params);
         $this->setETag($eTag);
@@ -213,9 +213,9 @@ class FacebookRequest
     /**
      * Set the HTTP method for this request.
      */
-    public function setMethod(string $method)
+    public function setMethod(?string $method)
     {
-        $this->method = strtoupper($method);
+        $this->method = $method ? strtoupper($method) : $method;
     }
 
     /**
@@ -225,7 +225,7 @@ class FacebookRequest
      */
     public function getMethod()
     {
-        return $this->method;
+        return $this->method ?: '';
     }
 
     /**
