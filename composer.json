@@ -1,5 +1,5 @@
 {
-    "name": "facebook/graph-sdk",
+    "name": "munipolis/graph-sdk",
     "description": "Facebook SDK for PHP",
     "keywords": ["facebook", "sdk"],
     "type": "library",
