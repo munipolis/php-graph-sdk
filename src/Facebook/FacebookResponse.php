@@ -233,7 +233,7 @@ class FacebookResponse
      */
     public function decodeBody()
     {
-        $this->decodedBody = json_decode($this->body, true);
+        $this->decodedBody = $this->body ? json_decode($this->body, true) : $this->body;
 
         if ($this->decodedBody === null) {
             $this->decodedBody = [];
