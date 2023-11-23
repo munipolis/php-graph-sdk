@@ -40,9 +40,9 @@ class FacebookUrlManipulator
      */
     public static function removeParamsFromUrl(?string $url, array $paramsToFilter): string
     {
-		if (!$url) {
-			return '';
-		}
+        if (!$url) {
+            return '';
+        }
 
         $parts = parse_url($url);
 
@@ -110,9 +110,9 @@ class FacebookUrlManipulator
      */
     public static function getParamsAsArray(?string $url)
     {
-		if (!$url) {
-			return [];
-		}
+        if (!$url) {
+            return [];
+        }
 
         $query = parse_url($url, PHP_URL_QUERY);
         if (!$query) {

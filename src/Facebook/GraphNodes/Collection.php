@@ -127,7 +127,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
      * Run a map over each of the items.
      */
     public function map(Closure $callback): static
-	{
+    {
         return new static(array_map($callback, $this->items, array_keys($this->items)));
     }
 
