@@ -38,14 +38,18 @@ class FacebookUrlManipulator
      *
      * @return string The URL with the params removed.
      */
-    public static function removeParamsFromUrl($url, array $paramsToFilter)
+    public static function removeParamsFromUrl(?string $url, array $paramsToFilter): string
     {
+        if (!$url) {
+            return '';
+        }
+
         $parts = parse_url($url);
 
         $query = '';
         if (isset($parts['query'])) {
             $params = [];
-            parse_str($parts['query'], $params);
+            parse_str((string) $parts['query'], $params);
 
             // Remove query params
             foreach ($paramsToFilter as $paramName) {
@@ -100,18 +104,22 @@ class FacebookUrlManipulator
     /**
      * Returns the params from a URL in the form of an array.
      *
-     * @param string $url The URL to parse the params from.
+     * @param string|null $url The URL to parse the params from.
      *
      * @return array
      */
-    public static function getParamsAsArray($url)
+    public static function getParamsAsArray(?string $url)
     {
+        if (!$url) {
+            return [];
+        }
+
         $query = parse_url($url, PHP_URL_QUERY);
         if (!$query) {
             return [];
         }
         $params = [];
-        parse_str($query, $params);
+        parse_str((string) $query, $params);
 
         return $params;
     }

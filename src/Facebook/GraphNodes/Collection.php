@@ -33,22 +33,20 @@ namespace Facebook\GraphNodes;
 
 use ArrayAccess;
 use ArrayIterator;
+use Closure;
 use Countable;
 use IteratorAggregate;
+use Traversable;
 
 class Collection implements ArrayAccess, Countable, IteratorAggregate
 {
     /**
      * The items contained in the collection.
-     *
-     * @var array
      */
-    protected $items = [];
+    protected array $items = [];
 
     /**
      * Create a new collection.
-     *
-     * @param array $items
      */
     public function __construct(array $items = [])
     {
@@ -78,12 +76,10 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
      * @param string $name    The property to retrieve.
      * @param mixed  $default The default to return if the property doesn't exist.
      *
-     * @return mixed
-     *
      * @deprecated 5.0.0 getProperty() has been renamed to getField()
      * @todo v6: Remove this method
      */
-    public function getProperty($name, $default = null)
+    public function getProperty(string $name, mixed $default = null): mixed
     {
         return $this->getField($name, $default);
     }
@@ -101,32 +97,26 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
     /**
      * Returns a list of all properties set on the object.
      *
-     * @return array
-     *
      * @deprecated 5.0.0 getPropertyNames() has been renamed to getFieldNames()
      * @todo v6: Remove this method
      */
-    public function getPropertyNames()
+    public function getPropertyNames(): array
     {
         return $this->getFieldNames();
     }
 
     /**
      * Get all of the items in the collection.
-     *
-     * @return array
      */
-    public function all()
+    public function all(): array
     {
         return $this->items;
     }
 
     /**
      * Get the collection of items as a plain array.
-     *
-     * @return array
      */
-    public function asArray()
+    public function asArray(): array
     {
         return array_map(function ($value) {
             return $value instanceof Collection ? $value->asArray() : $value;
@@ -135,107 +125,76 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
 
     /**
      * Run a map over each of the items.
-     *
-     * @param \Closure $callback
-     *
-     * @return static
      */
-    public function map(\Closure $callback)
+    public function map(Closure $callback): static
     {
         return new static(array_map($callback, $this->items, array_keys($this->items)));
     }
 
     /**
      * Get the collection of items as JSON.
-     *
-     * @param int $options
-     *
-     * @return string
      */
-    public function asJson($options = 0)
+    public function asJson(int $options = 0): string
     {
         return json_encode($this->asArray(), $options);
     }
 
     /**
      * Count the number of items in the collection.
-     *
-     * @return int
      */
-    public function count()
+    public function count(): int
     {
         return count($this->items);
     }
 
     /**
      * Get an iterator for the items.
-     *
-     * @return ArrayIterator
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->items);
     }
 
     /**
      * Determine if an item exists at an offset.
-     *
-     * @param mixed $key
-     *
-     * @return bool
      */
-    public function offsetExists($key)
+    public function offsetExists(mixed $offset): bool
     {
-        return array_key_exists($key, $this->items);
+        return array_key_exists($offset, $this->items);
     }
 
     /**
      * Get an item at a given offset.
-     *
-     * @param mixed $key
-     *
-     * @return mixed
      */
-    public function offsetGet($key)
+    public function offsetGet(mixed $offset): mixed
     {
-        return $this->items[$key];
+        return $this->items[$offset];
     }
 
     /**
      * Set the item at a given offset.
-     *
-     * @param mixed $key
-     * @param mixed $value
-     *
-     * @return void
      */
-    public function offsetSet($key, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
-        if (is_null($key)) {
+        if (is_null($offset)) {
             $this->items[] = $value;
         } else {
-            $this->items[$key] = $value;
+            $this->items[$offset] = $value;
         }
     }
 
     /**
      * Unset the item at a given offset.
-     *
-     * @param string $key
-     *
-     * @return void
      */
-    public function offsetUnset($key)
+    public function offsetUnset($offset): void
     {
-        unset($this->items[$key]);
+        unset($this->items[$offset]);
     }
 
     /**
      * Convert the collection to its string representation.
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->asJson();
     }

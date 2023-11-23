@@ -233,11 +233,11 @@ class FacebookResponse
      */
     public function decodeBody()
     {
-        $this->decodedBody = json_decode($this->body, true);
+        $this->decodedBody = $this->body ? json_decode($this->body, true) : $this->body;
 
         if ($this->decodedBody === null) {
             $this->decodedBody = [];
-            parse_str($this->body, $this->decodedBody);
+            parse_str($this->body ?? '', $this->decodedBody);
         } elseif (is_bool($this->decodedBody)) {
             // Backwards compatibility for Graph < 2.1.
             // Mimics 2.1 responses.

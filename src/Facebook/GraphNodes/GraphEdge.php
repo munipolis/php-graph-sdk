@@ -23,6 +23,7 @@
  */
 namespace Facebook\GraphNodes;
 
+use Closure;
 use Facebook\FacebookRequest;
 use Facebook\Url\FacebookUrlManipulator;
 use Facebook\Exceptions\FacebookSDKException;
@@ -239,7 +240,7 @@ class GraphEdge extends Collection
     /**
      * @inheritDoc
      */
-    public function map(\Closure $callback)
+    public function map(Closure $callback): static
     {
         return new static(
             $this->request,
