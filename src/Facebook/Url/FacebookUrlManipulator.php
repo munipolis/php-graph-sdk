@@ -38,8 +38,12 @@ class FacebookUrlManipulator
      *
      * @return string The URL with the params removed.
      */
-    public static function removeParamsFromUrl($url, array $paramsToFilter)
+    public static function removeParamsFromUrl(?string $url, array $paramsToFilter): string
     {
+		if (!$url) {
+			return '';
+		}
+
         $parts = parse_url($url);
 
         $query = '';

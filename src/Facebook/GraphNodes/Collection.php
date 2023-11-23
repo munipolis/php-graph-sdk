@@ -36,6 +36,7 @@ use ArrayIterator;
 use Closure;
 use Countable;
 use IteratorAggregate;
+use Traversable;
 
 class Collection implements ArrayAccess, Countable, IteratorAggregate
 {
@@ -148,10 +149,8 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
 
     /**
      * Get an iterator for the items.
-     *
-     * @return ArrayIterator
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->items);
     }
