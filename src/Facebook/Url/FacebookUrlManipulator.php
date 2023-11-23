@@ -100,12 +100,16 @@ class FacebookUrlManipulator
     /**
      * Returns the params from a URL in the form of an array.
      *
-     * @param string $url The URL to parse the params from.
+     * @param string|null $url The URL to parse the params from.
      *
      * @return array
      */
-    public static function getParamsAsArray($url)
+    public static function getParamsAsArray(?string $url)
     {
+		if (!$url) {
+			return [];
+		}
+
         $query = parse_url($url, PHP_URL_QUERY);
         if (!$query) {
             return [];
